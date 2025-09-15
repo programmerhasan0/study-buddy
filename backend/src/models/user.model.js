@@ -1,0 +1,24 @@
+/**
+ *
+ * Project Name : study-buddy(backend)
+ * Developer : Md Habibul Hasan
+ * Developer Email : programmerhasan0@gmail.com
+ * File name : user.model.js
+ * File description: this file contains the user model for the Study Buddy project.
+ * Date : 15/09/2025
+ *
+ */
+
+const db = require('../services/db.service');
+
+const userSchema = db.Schema({
+    firstName: {type: String, required: true},
+    lastName: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+    phoneNumber: {type: String, required: true, unique: true},
+});
+
+const User = new db.model('User', userSchema);
+
+module.exports = User;
