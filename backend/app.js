@@ -15,6 +15,9 @@ const cors = require('cors');
 
 const app = express();
 
+// middlewares
+const {checkAuth} = require('./middlewares/auth.middleware');
+
 // routes
 const authRoute = require('./src/routes/auth.route');
 
@@ -22,6 +25,9 @@ const authRoute = require('./src/routes/auth.route');
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoute);
+
+//* calling checkAuth middleware here so that it can check all routes except /api/auth routes
+app.use(checkAuth);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
