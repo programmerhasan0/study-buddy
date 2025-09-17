@@ -11,13 +11,12 @@
 
 const checkAuth = (req, res, next) => {
     const token = req.cookies?.token;
+
     if (token) {
         console.log(token);
         next();
     } else {
-        return res
-            .status(401)
-            .json({message: 'Unauthorized! Please login first'});
+        return res.status(401).send('Unauthorized! Please Login');
     }
 };
 

@@ -8,3 +8,15 @@
  * Date : 17/09/2025
  *
  */
+
+const {GoogleGenAI} = require('@google/genai');
+
+// It will get the api key automatically from .env
+const ai = new GoogleGenAI({});
+
+const modelVersion = 'gemini-2.5-flash';
+
+module.exports = {
+    model: ai.models,
+    version: modelVersion,
+};

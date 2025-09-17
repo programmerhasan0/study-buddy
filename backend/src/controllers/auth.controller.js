@@ -103,8 +103,8 @@ const register = async (req, res, next) => {
         });
 };
 
-// logout controller --> comming soon
-// forget password controller --> comming soon
+// TODO : logout controller
+// TODO : forget password controller
 
 module.exports.login = login;
 module.exports.register = register;
