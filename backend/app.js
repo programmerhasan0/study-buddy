@@ -29,9 +29,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', authRoute);
 
-//* calling checkAuth middleware here so that it can check all routes except /api/auth routes
-app.use(checkAuth);
-app.use('/api/ai/', aiRoute);
+app.use('/api/ai/', checkAuth, aiRoute);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

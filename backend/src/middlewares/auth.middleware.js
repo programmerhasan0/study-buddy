@@ -16,7 +16,7 @@ const checkAuth = (req, res, next) => {
         console.log(token);
         next();
     } else {
-        return res.status(401).send('Unauthorized! Please Login');
+        return res.status(401).json({message: 'Unauthorized! Please login'});
     }
 };
 

@@ -26,14 +26,40 @@ const generateNotes = async (text) => {
             }
             --- EXAMPLE END ---
 
-            Provide detailed study notes in a clear, well structured format (e.g., using bullet points, headings and bold text). Ensure the notes cover all key concepts and important details from the text.
-            
-            DONT USE anything extra like ('''json <content>''') in your response. just send the response directly. And make the not in 1 line. Multiple line cannot works with "JSON.parse()". for return/enter use pure string format such as "\\n" etc. It should not get an error while parsing but its getting an (,) error.           
+            Use markdown file writing method so that I can show it into my markdown viewer. Provide detailed study notes in a clear, well structured format. Ensure the notes cover all key concepts and important details from the text.
+
+            DONT USE ANYTHING EXTRA ( LIKE: '''json <content>''') IN YOUR RESPONSE. just send the response directly. And make the not in 1 line. Multiple line cannot works with "JSON.parse()". It should not get an error while parsing but its getting an (,) error. 
             `,
         },
     });
 
-    return JSON.parse(response.candidates[0].content.parts[0].text);
+    return JSON.parse(response.text);
+};
+
+const generateFlashCards = async (text) => {
+    const response = await model.generateContent({
+        model: version,
+        contents: text,
+        config: {
+            systemInstruction: `You are an expert academic assistant and a Private tutor with 10+ years of experiance. Your task is to generate flashcards from the given text in the content. The flashcards will have 2 sides: front & back. The front will contain the question and the back will contain the answer. You have to give the response in JSON format in an array of object where each object will represent a question and a answer. Here is an example below:
+
+            --- EXAMPLE START ---
+            [
+                {
+                "front" : "The question will be here"
+                "back" : "The answer will be here""
+                }            
+            ]
+            --- EXAMPLE END ---
+
+            Make the study notes well structured format. Ensure the Flashcards cover all key concepts and important details from the text. Don't make more than 20 flashcards at once. You can make less then 20.
+            
+            DONT USE anything extra like ('''json <content>''') in your response. just send the response directly. And make the not in 1 line. Multiple line cannot works with "JSON.parse()". for return/enter use pure string format such as "\\n" etc. It should not get an error while parsing but its getting an (,) error. 
+            `,
+        },
+    });
+    return JSON.parse(response.text);
 };
 
 module.exports.generateNotes = generateNotes;
+module.exports.generateFlashCards = generateFlashCards;
