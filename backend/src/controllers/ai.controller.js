@@ -9,7 +9,13 @@
  *
  */
 
-const {generateNotes, generateFlashCards} = require('../utils/generate.util');
+const {
+    generateNotes,
+    generateFlashCards,
+    generateQuizzes,
+} = require('../utils/generate.util');
+
+const {ApiResponse} = require('../utils/ApiResponse.util');
 
 const makeNote = (req, res) => {
     const {text} = req.body;
@@ -17,10 +23,11 @@ const makeNote = (req, res) => {
     if (text) {
         generateNotes(text).then((data) => {
             // TODO : save data to database with the user id which will be retrieved from the token.
-            res.status(200).json({message: data});
+
+            res.status(200).json(new ApiResponse(200, 'Text Summerized', data));
         });
     } else {
-        return res.status(400).json({message: 'Prompt is required'});
+        return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
     }
 };
 
@@ -30,12 +37,30 @@ const makeFlashCards = (req, res) => {
     if (text) {
         generateFlashCards(text).then((data) => {
             // TODO : save flashcards in database along with the user id
-            return res.status(200).json({message: data});
+            return res
+                .status(200)
+                .json(new ApiResponse(200, 'Flashcards Generated', data));
         });
     } else {
-        return res.status(400).json({message: 'Prompt is required'});
+        return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
+    }
+};
+
+const makeQuizzes = (req, res) => {
+    const {text} = req.body;
+
+    if (text) {
+        generateQuizzes(text).then((data) => {
+            res.status(200).json(
+                new ApiResponse(200, 'Quizzes Generated', data)
+            );
+            return;
+        });
+    } else {
+        return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
     }
 };
 
 module.exports.makeNote = makeNote;
 module.exports.makeFlashCards = makeFlashCards;
+module.exports.makeQuizzes = makeQuizzes;

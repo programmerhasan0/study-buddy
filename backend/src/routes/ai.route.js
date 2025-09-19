@@ -12,9 +12,14 @@
 const router = require('express').Router();
 
 // controllers
-const {makeNote, makeFlashCards} = require('../controllers/ai.controller');
+const {
+    makeNote,
+    makeFlashCards,
+    makeQuizzes,
+} = require('../controllers/ai.controller');
 
 router.post('/make-note', makeNote);
 router.post('/make-flashcards', makeFlashCards);
+router.post('/make-quizzes', makeQuizzes);
 
 module.exports = router;
