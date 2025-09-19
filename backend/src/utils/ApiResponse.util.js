@@ -10,9 +10,10 @@
  */
 
 class ApiResponse {
-    constructor(status, message, data = {}) {
+    constructor(status, message, type = 'response', data = {}) {
         this.status = status;
         this.message = message;
+        this.type = type;
         this.data = data;
     }
 }

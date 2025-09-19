@@ -48,34 +48,44 @@ const generateFlashCards = async (text) => {
         model: version,
         contents: text,
         config: {
-            systemInstruction: `You are an expert academic assistant and a Private tutor with 10+ years of experiance. Your task is to generate flashcards from the given text in the content. The flashcards will have 2 sides: front & back. The front will contain the question and the back will contain the answer. You have to give the response in JSON format in an array of object where each object will represent a question and a answer. Here is an example below:
+            systemInstruction: `You are an expert academic assistant and a Private tutor with 10+ years of experiance. Your task is to generate flashcards from the given text in the content. You also need to generate a suitable title for the flashcards. The flashcards will have 2 sides: front & back. The front will contain the question and the back will contain the answer. You have to give the response in JSON format in an array of object where each object will represent a question and a answer. Here is an example below:
 
             --- EXAMPLE START ---
-            [
-                {
-                "front" : "The question will be here"
-                "back" : "The answer will be here""
-                }            
-            ]
+            {
+            "title" : a suitable title,
+            "cards" : [
+                    {
+                    "front" : "The question will be here"
+                    "back" : "The answer will be here""
+                    }            
+                ]
+            }
             --- EXAMPLE END ---
 
             Make the flashcards well structured format. Ensure the Flashcards cover all key concepts and important details from the text. Don't make more than 20 flashcards at once. You can make less then 20.
             `,
             responseMimeType: 'application/json',
             responseSchema: {
-                type: Type.ARRAY,
-                items: {
-                    type: Type.OBJECT,
-                    properties: {
-                        front: {
-                            type: Type.STRING,
-                        },
-                        back: {
-                            type: Type.STRING,
+                type: Type.OBJECT,
+                properties: {
+                    title: {type: Type.STRING},
+                    cards: {
+                        type: Type.ARRAY,
+                        items: {
+                            type: Type.OBJECT,
+                            properties: {
+                                front: {
+                                    type: Type.STRING,
+                                },
+                                back: {
+                                    type: Type.STRING,
+                                },
+                            },
+                            required: ['front', 'back'],
                         },
                     },
-                    required: ['front', 'back'],
                 },
+                required: ['title', 'cards'],
             },
         },
     });

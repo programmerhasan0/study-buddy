@@ -16,6 +16,7 @@ const {
 } = require('../utils/generate.util');
 
 const {ApiResponse} = require('../utils/ApiResponse.util');
+const FlashCard = require('../models/flashCard.model');
 
 const makeNote = (req, res) => {
     const {text} = req.body;
@@ -24,7 +25,9 @@ const makeNote = (req, res) => {
         generateNotes(text).then((data) => {
             // TODO : save data to database with the user id which will be retrieved from the token.
 
-            res.status(200).json(new ApiResponse(200, 'Text Summerized', data));
+            res.status(200).json(
+                new ApiResponse(200, 'Text Summerized', 'note', data)
+            );
         });
     } else {
         return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
@@ -35,11 +38,25 @@ const makeFlashCards = (req, res) => {
     const {text} = req.body;
 
     if (text) {
-        generateFlashCards(text).then((data) => {
+        generateFlashCards(text).then(async (data) => {
             // TODO : save flashcards in database along with the user id
+            const flashCard = new FlashCard({
+                userId: req.user._id,
+                title: data.title,
+                flashCard: data.cards,
+            });
+
+            await flashCard.save();
             return res
                 .status(200)
-                .json(new ApiResponse(200, 'Flashcards Generated', data));
+                .json(
+                    new ApiResponse(
+                        200,
+                        'Flashcards Generated',
+                        'flashcards',
+                        data
+                    )
+                );
         });
     } else {
         return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
