@@ -18,13 +18,33 @@ const {
 const {ApiResponse} = require('../utils/ApiResponse.util');
 const FlashCard = require('../models/flashCard.model');
 
+const Note = require('../models/note.model');
+const Quiz = require('../models/quiz.model');
+const User = require('../models/user.model');
+
 const makeNote = (req, res) => {
     const {text} = req.body;
 
     if (text) {
-        generateNotes(text).then((data) => {
+        generateNotes(text).then(async (data) => {
             // TODO : save data to database with the user id which will be retrieved from the token.
+            console.log(data);
 
+            const note = new Note({
+                userId: req.user._id,
+                title: data.title,
+                note: data.note,
+            });
+
+            const savedNote = await note.save();
+
+            await User.findByIdAndUpdate(
+                req.user._id,
+                {
+                    $push: {notes: savedNote._id},
+                },
+                {new: true}
+            );
             res.status(200).json(
                 new ApiResponse(200, 'Text Summerized', 'note', data)
             );
@@ -46,7 +66,16 @@ const makeFlashCards = (req, res) => {
                 flashCard: data.cards,
             });
 
-            await flashCard.save();
+            const savedCard = await flashCard.save();
+
+            await User.findByIdAndUpdate(
+                req.user._id,
+                {
+                    $push: {flashcards: savedCard._id},
+                },
+                {new: true}
+            );
+
             return res
                 .status(200)
                 .json(
@@ -67,9 +96,25 @@ const makeQuizzes = (req, res) => {
     const {text} = req.body;
 
     if (text) {
-        generateQuizzes(text).then((data) => {
+        generateQuizzes(text).then(async (data) => {
+            const quiz = new Quiz({
+                userId: req.user._id,
+                title: data.title,
+                quizzes: data.quizzes,
+            });
+
+            const savedQuiz = await quiz.save();
+
+            await User.findByIdAndUpdate(
+                req.user._id,
+                {
+                    $push: {quizzes: savedQuiz._id},
+                },
+                {new: true}
+            );
+
             res.status(200).json(
-                new ApiResponse(200, 'Quizzes Generated', data)
+                new ApiResponse(200, 'Quizzes Generated', 'quizz', data)
             );
             return;
         });

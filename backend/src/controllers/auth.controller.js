@@ -13,6 +13,8 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 
+const {ApiResponse} = require('../utils/ApiResponse.util');
+
 // login controller
 const login = (req, res, next) => {
     const {email, password} = req.body;
@@ -87,18 +89,22 @@ const register = async (req, res, next) => {
 
     user.save()
         .then(() => {
-            res.status(201).json({message: 'User registered successfully'});
+            res.status(201).json(
+                new ApiResponse(201, 'User registered successfully')
+            );
         })
         .catch((err) => {
             if (err.code === 11000) {
-                res.status(400).json({
-                    message: 'Email or phone number already exists',
-                });
+                res.status(400).json(
+                    new ApiResponse(400, 'Email or phone number already exists')
+                );
             } else {
-                res.status(500).json({
-                    message:
-                        'Error registering user. Please contact the Administrator',
-                });
+                res.status(500).json(
+                    new ApiResponse(
+                        500,
+                        'Error registering user. Please contact the Administrator'
+                    )
+                );
             }
         });
 };

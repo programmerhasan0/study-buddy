@@ -22,6 +22,7 @@ const {checkAuth} = require('./src/middlewares/auth.middleware');
 // routes
 const authRoute = require('./src/routes/auth.route');
 const aiRoute = require('./src/routes/ai.route');
+const savedRoute = require('./src/routes/saved.route');
 
 // app middlewares
 app.use(cors());
@@ -29,7 +30,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', authRoute);
 
-app.use('/api/ai/', checkAuth, aiRoute);
+app.use('/api/ai', checkAuth, aiRoute);
+app.use('/api/saved', checkAuth, savedRoute);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

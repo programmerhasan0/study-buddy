@@ -98,7 +98,7 @@ const generateQuizzes = async (text) => {
         contents: text,
         config: {
             systemInstruction: `
-            You are an expert academic assistant and a Private tutor with 10+ years of experiance. Your task is to generate quizzes from the given text in the content. A single quiz will have a question, 4 options and one correct answer. You have to give the response in JSON format in an array of object where each object will represent a quizz. Here is an example below:
+            You are an expert academic assistant and a Private tutor with 10+ years of experiance. Your task is to generate quizzes from the given text in the content. You also need to generate a suitable title. A single quiz will have a question, 4 options and one correct answer. You have to give the response in JSON format in an array of object where each object will represent a quizz. Here is an example below:
 
             --- EXAMPLE START ---
             [
@@ -116,31 +116,40 @@ const generateQuizzes = async (text) => {
             
             `,
             responseMimeType: 'application/json',
-            // responseSchema: questionSchema,
             responseSchema: {
-                type: Type.ARRAY,
-                items: {
-                    type: Type.OBJECT,
-                    properties: {
-                        question: {type: Type.STRING},
-                        options: {
-                            type: Type.ARRAY,
-                            items: {type: Type.STRING},
-                            minItems: 4,
-                            maxItems: 4,
-                        },
-                        correctAnswerIndex: {
-                            type: Type.INTEGER,
-                            minimum: 0,
-                            maximum: 3,
+                type: Type.OBJECT,
+                properties: {
+                    title: {type: Type.STRING},
+                    quizzes: {
+                        type: Type.ARRAY,
+                        items: {
+                            type: Type.OBJECT,
+                            properties: {
+                                question: {type: Type.STRING},
+                                options: {
+                                    type: Type.ARRAY,
+                                    items: {type: Type.STRING},
+                                    minItems: 4,
+                                    maxItems: 4,
+                                },
+                                correctAnswerIndex: {
+                                    type: Type.INTEGER,
+                                    minimum: 0,
+                                    maximum: 3,
+                                },
+                            },
+                            required: [
+                                'question',
+                                'options',
+                                'correctAnswerIndex',
+                            ],
                         },
                     },
-                    required: ['question', 'options', 'correctAnswerIndex'],
                 },
+                required: ['title', 'quizzes'],
             },
         },
     });
-    console.log(response.text);
     return JSON.parse(response.text);
 };
 

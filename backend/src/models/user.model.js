@@ -17,7 +17,9 @@ const userSchema = db.Schema({
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     phoneNumber: {type: String, required: true, unique: true},
+    notes: [{type: db.Schema.Types.ObjectId, ref: 'Note'}],
     flashcards: [{type: db.Schema.Types.ObjectId, ref: 'Flashcard'}],
+    quizzes: [{type: db.Schema.Types.ObjectId, ref: 'Quiz'}],
 });
 
 const User = new db.model('User', userSchema);
