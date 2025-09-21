@@ -45,12 +45,15 @@ const makeNote = (req, res) => {
                 },
                 {new: true}
             );
-            res.status(200).json(
-                new ApiResponse(200, 'Text Summerized', 'note', data)
+            return new ApiResponse(res).success(
+                201,
+                'Text Summerized',
+                'note',
+                data
             );
         });
     } else {
-        return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
+        return new ApiResponse(res).error(400, 'Prompt is required');
     }
 };
 
@@ -76,19 +79,15 @@ const makeFlashCards = (req, res) => {
                 {new: true}
             );
 
-            return res
-                .status(200)
-                .json(
-                    new ApiResponse(
-                        200,
-                        'Flashcards Generated',
-                        'flashcards',
-                        data
-                    )
-                );
+            return new ApiResponse(res).success(
+                201,
+                'Flashcards Generated',
+                'flashcards',
+                data
+            );
         });
     } else {
-        return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
+        return new ApiResponse(res).error(400, 'Prompt is required');
     }
 };
 
@@ -112,14 +111,15 @@ const makeQuizzes = (req, res) => {
                 },
                 {new: true}
             );
-
-            res.status(200).json(
-                new ApiResponse(200, 'Quizzes Generated', 'quizz', data)
+            return new ApiResponse(res).success(
+                201,
+                'Quizzes Generated',
+                'quiz',
+                data
             );
-            return;
         });
     } else {
-        return res.status(400).json(new ApiResponse(400, 'Prompt is Required'));
+        return new ApiResponse(res).error(400, 'Prompt is required');
     }
 };
 

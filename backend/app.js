@@ -23,12 +23,17 @@ const {checkAuth} = require('./src/middlewares/auth.middleware');
 const authRoute = require('./src/routes/auth.route');
 const aiRoute = require('./src/routes/ai.route');
 const savedRoute = require('./src/routes/saved.route');
+const {DummyApiResponse, ApiResponse} = require('./src/utils/ApiResponse.util');
 
 // app middlewares
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', authRoute);
+
+app.get('/', (req, res) => {
+    return new ApiResponse(res).success(200, 'Working Properly');
+});
 
 app.use('/api/ai', checkAuth, aiRoute);
 app.use('/api/saved', checkAuth, savedRoute);

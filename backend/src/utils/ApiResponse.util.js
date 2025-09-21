@@ -10,11 +10,50 @@
  */
 
 class ApiResponse {
-    constructor(status, message, type = 'response', data = {}) {
-        this.status = status;
-        this.message = message;
-        this.type = type;
-        this.data = data;
+    constructor(res) {
+        this.res = res;
+    }
+
+    success(status = 200, message, type = 'response', data = {}) {
+        return this.res.status(status).json({
+            status,
+            message,
+            type,
+            data,
+        });
+    }
+
+    setCookie(name, value) {
+        this.res.cookie(name, value);
+        return this;
+    }
+
+    clearCookie(name) {
+        this.res.clearCookie(name);
+        return this;
+    }
+
+    clearToken() {
+        this.res.clearCookie('token');
+        return this;
+    }
+
+    setToken(token) {
+        this.res.cookie('token', token);
+        return this;
+    }
+
+    error(
+        status = 500,
+        message = 'Internal server error! Please contact the admin',
+        type = 'error'
+    ) {
+        return this.res.status(status).json({
+            status,
+            message,
+            type,
+        });
     }
 }
+
 module.exports.ApiResponse = ApiResponse;

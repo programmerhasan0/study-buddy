@@ -33,8 +33,8 @@ router.get('/quizzes-title', getQuizzesTitle);
 router.get('/quiz/:quizId', getQuiz);
 
 // delete routes
+router.delete('/delete/note', deleteNote);
 router.delete('/delete/flashcard', deleteFlashcard);
 router.delete('/delete/quiz', deleteQuiz);
-router.delete('/delete/note', deleteNote);
 
 module.exports = router;

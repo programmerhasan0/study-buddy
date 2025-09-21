@@ -19,18 +19,20 @@ const {ApiResponse} = require('../utils/ApiResponse.util');
 const login = (req, res, next) => {
     const {email, password} = req.body;
     if (!email || !password) {
-        return res
-            .status(400)
-            .json({message: 'Email and password are required'});
+        return new ApiResponse(res).error(
+            400,
+            'Email and password are required'
+        );
     }
 
     try {
         User.findOne({email})
             .then(async (user) => {
                 if (!user) {
-                    return res.status(404).clearCookie('token').json({
-                        message: 'User not found. Please register first.',
-                    });
+                    return new ApiResponse(res).error(
+                        404,
+                        'User not found. Please register first.'
+                    );
                 } else {
                     const pw = user.password;
 
@@ -46,24 +48,22 @@ const login = (req, res, next) => {
                                 expiresIn: '1d',
                             }
                         );
-                        return res.status(200).cookie('token', token).json({
-                            message: 'Login successful',
-                        });
+                        return new ApiResponse(res)
+                            .setToken(token)
+                            .success(200, 'Login successful');
                     }
-                    return res
-                        .status(400)
-                        .clearCookie('token')
-                        .json({message: 'Email or Password invalid'});
+                    return new ApiResponse(res)
+                        .clearToken()
+                        .error(400, 'Email or Password invalid');
                 }
             })
             .catch((err) => {
-                console.log(err);
-                return res.status(404).clearCookie('token').json({
-                    message: 'User not found. Please register first.',
-                });
+                return new ApiResponse(res)
+                    .clearToken()
+                    .error(404, 'User not found. Please register first.');
             });
     } catch (err) {
-        console.log('logging the error', err);
+        return new ApiResponse().error();
     }
 };
 
@@ -80,10 +80,10 @@ const register = async (req, res, next) => {
         !confirmPassword ||
         !phoneNumber
     ) {
-        return res.status(400).json({message: 'All fields are required'});
+        return new ApiResponse(res).error(400, 'All fields are required');
     }
     if (password !== confirmPassword) {
-        return res.status(400).json({message: 'Passwords do not match'});
+        return new ApiResponse(res).error(400, 'Passwords do not match');
     }
 
     // creating password hash
@@ -99,21 +99,21 @@ const register = async (req, res, next) => {
 
     user.save()
         .then(() => {
-            res.status(201).json(
-                new ApiResponse(201, 'User registered successfully')
+            return new ApiResponse(res).success(
+                201,
+                'User registered successfully'
             );
         })
         .catch((err) => {
             if (err.code === 11000) {
-                res.status(400).json(
-                    new ApiResponse(400, 'Email or phone number already exists')
+                return new ApiResponse(res).error(
+                    400,
+                    'Email or phone number already exists'
                 );
             } else {
-                res.status(500).json(
-                    new ApiResponse(
-                        500,
-                        'Error registering user. Please contact the Administrator'
-                    )
+                return new ApiResponse(res).error(
+                    500,
+                    'Error registering user. Please contact the Administrator'
                 );
             }
         });

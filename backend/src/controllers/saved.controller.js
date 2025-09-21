@@ -20,28 +20,26 @@ const getNotesTitle = async (req, res, next) => {
         path: 'notes',
         select: 'title',
     });
-    return res
-        .status(200)
-        .json(
-            new ApiResponse(
-                200,
-                'data retrieve successful',
-                'quizzes title',
-                notes.notes
-            )
-        );
+    console.log(notes);
+    return new ApiResponse(res).success(
+        200,
+        'data retrieve successful',
+        'notes title',
+        notes.notes
+    );
 };
 
 const getNote = async (req, res, next) => {
     const note = await Note.findById(req.params.noteId).select('-userId -__v');
     if (note) {
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(200, 'Data retrieve successful', 'note', note)
-            );
+        return new ApiResponse(res).success(
+            200,
+            'Data retrieve successful',
+            'note',
+            note
+        );
     } else {
-        return res.status(404).json(new ApiResponse(404, 'Note not found'));
+        return new ApiResponse(res).error(404, 'Note not found');
     }
 };
 
@@ -57,14 +55,17 @@ const deleteNote = async (req, res, next) => {
             {new: true}
         );
 
-        await Note.findByIdAndDelete(noteId, {
-            new: true,
+        const deletedNote = await Note.findByIdAndDelete(noteId, {
+            new: false,
         });
-        return res.status(200).json(new ApiResponse(200, 'Note Deleted'));
+
+        if (deletedNote) {
+            return new ApiResponse(res).success(200, 'Note Deleted');
+        } else {
+            return new ApiResponse(res).error(404, 'Note not found');
+        }
     } else {
-        return res
-            .status(400)
-            .json(new ApiResponse(400, 'Note Id is required'));
+        return new ApiResponse(res).error(400, 'Note id is required');
     }
 };
 
@@ -73,16 +74,12 @@ const getFlashcardTitles = async (req, res, next) => {
         path: 'flashcards',
         select: 'title',
     });
-    return res
-        .status(200)
-        .json(
-            new ApiResponse(
-                200,
-                'data retrieve successful',
-                'flashcards title',
-                flashcards.flashcards
-            )
-        );
+    return new ApiResponse(res).success(
+        200,
+        'data retrieve successful',
+        'flashcards title',
+        flashcards.flashcards
+    );
 };
 
 const getFlashCard = async (req, res, next) => {
@@ -90,20 +87,14 @@ const getFlashCard = async (req, res, next) => {
         '-userId -__v'
     );
     if (flashcard) {
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(
-                    200,
-                    'Data retrieve successful',
-                    'flashcard',
-                    flashcard
-                )
-            );
+        return new ApiResponse(res).success(
+            200,
+            'Data retrieve successful',
+            'flashcard',
+            flashcard
+        );
     } else {
-        return res
-            .status(404)
-            .json(new ApiResponse(404, 'Flashcard not found'));
+        return new ApiResponse(res).error(404, 'Flashcard not found');
     }
 };
 
@@ -118,14 +109,19 @@ const deleteFlashcard = async (req, res, next) => {
             {new: true}
         );
 
-        await Flashcard.findByIdAndDelete(flashcardId, {
-            new: true,
-        });
-        return res.status(200).json(new ApiResponse(200, 'Flashcard Deleted'));
+        const deletedFlashcard = await Flashcard.findByIdAndDelete(
+            flashcardId,
+            {
+                new: false,
+            }
+        );
+        if (deletedFlashcard) {
+            return new ApiResponse(res).success(200, 'Flashcard Deleted');
+        } else {
+            return new ApiResponse(res).error(404, 'Flashcard not found');
+        }
     } else {
-        return res
-            .status(400)
-            .json(new ApiResponse(400, 'Flashcard Id is required'));
+        return new ApiResponse(res).error(400, 'Flashcard Id is required');
     }
 };
 
@@ -134,28 +130,25 @@ const getQuizzesTitle = async (req, res, next) => {
         path: 'quizzes',
         select: 'title',
     });
-    return res
-        .status(200)
-        .json(
-            new ApiResponse(
-                200,
-                'data retrieve successful',
-                'quizzes title',
-                quizzes.quizzes
-            )
-        );
+    return new ApiResponse(res).success(
+        200,
+        'data retrieve successful',
+        'quizzes title',
+        quizzes.quizzes
+    );
 };
 
 const getQuiz = async (req, res, next) => {
     const quiz = await Quiz.findById(req.params.quizId).select('-userId -__v');
     if (quiz) {
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(200, 'Data retrieve successful', 'quiz', quiz)
-            );
+        return new ApiResponse(res).success(
+            200,
+            'Data retrieve successful',
+            'quiz',
+            quiz
+        );
     } else {
-        return res.status(404).json(new ApiResponse(404, 'Quiz not found'));
+        return new ApiResponse(res).error(404, 'Quiz not found');
     }
 };
 
@@ -172,14 +165,12 @@ const deleteQuiz = async (req, res, next) => {
 
         const deletedQuiz = await Quiz.findByIdAndDelete(quizId, {new: false});
         if (deletedQuiz) {
-            return res.status(200).json(new ApiResponse(200, 'quiz deleted'));
+            return new ApiResponse(res).success(200, 'Quiz deleted');
         } else {
-            return res.status(404).json(new ApiResponse(404, 'No quiz found'));
+            return new ApiResponse(res).error(404, 'No quiz found');
         }
     } else {
-        return res
-            .status(400)
-            .json(new ApiResponse(400, 'Quiz Id is required'));
+        return new ApiResponse(400, 'Quiz Id is required');
     }
 };
 

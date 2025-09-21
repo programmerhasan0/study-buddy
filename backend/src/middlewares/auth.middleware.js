@@ -27,28 +27,24 @@ const checkAuth = async (req, res, next) => {
                     req.user = user;
                     next();
                 } else {
-                    return res
-                        .status(404)
-                        .json(
-                            new ApiResponse(404, 'User not found! Please login')
-                        );
+                    return new ApiResponse(res).error(
+                        404,
+                        'User not found! Please login'
+                    );
                 }
             }
         } catch (err) {
             if (err instanceof jwt.JsonWebTokenError) {
-                return res
-                    .status(401)
-                    .json(
-                        new ApiResponse(401, 'Invalid Session! Please relogin')
-                    );
+                return new ApiResponse(res).error(
+                    401,
+                    'Invalid Session! Please relogin'
+                );
             } else {
-                return res
-                    .status(500)
-                    .json(new ApiResponse(500, 'Internal Server Error'));
+                return new ApiResponse(res).error();
             }
         }
     } else {
-        return res.status(401).json({message: 'Unauthorized! Please login'});
+        return new ApiResponse(res).error(401, 'Unauthorized! Please login');
     }
 };
 
