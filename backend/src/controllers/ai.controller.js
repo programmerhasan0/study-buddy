@@ -16,7 +16,7 @@ const {
 } = require('../utils/generate.util');
 
 const {ApiResponse} = require('../utils/ApiResponse.util');
-const FlashCard = require('../models/flashCard.model');
+const FlashCard = require('../models/flashcard.model');
 
 const Note = require('../models/note.model');
 const Quiz = require('../models/quiz.model');
@@ -63,7 +63,7 @@ const makeFlashCards = (req, res) => {
             const flashCard = new FlashCard({
                 userId: req.user._id,
                 title: data.title,
-                flashCard: data.cards,
+                flashcard: data.cards,
             });
 
             const savedCard = await flashCard.save();

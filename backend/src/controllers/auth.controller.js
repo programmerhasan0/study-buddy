@@ -24,37 +24,47 @@ const login = (req, res, next) => {
             .json({message: 'Email and password are required'});
     }
 
-    User.findOne({email})
-        .then(async (user) => {
-            const pw = user.password;
+    try {
+        User.findOne({email})
+            .then(async (user) => {
+                if (!user) {
+                    return res.status(404).clearCookie('token').json({
+                        message: 'User not found. Please register first.',
+                    });
+                } else {
+                    const pw = user.password;
 
-            // comparing password
-            const isMatch = await bcrypt.compare(password, pw);
+                    // comparing password
+                    const isMatch = await bcrypt.compare(password, pw);
 
-            // sending response to client
-            if (isMatch) {
-                const token = jwt.sign(
-                    {id: user._id.toString()},
-                    process.env.JWT_SECRET,
-                    {
-                        expiresIn: '1d',
+                    // sending response to client
+                    if (isMatch) {
+                        const token = jwt.sign(
+                            {id: user._id.toString()},
+                            process.env.JWT_SECRET,
+                            {
+                                expiresIn: '1d',
+                            }
+                        );
+                        return res.status(200).cookie('token', token).json({
+                            message: 'Login successful',
+                        });
                     }
-                );
-                return res.status(200).cookie('token', token).json({
-                    message: 'Login successful',
+                    return res
+                        .status(400)
+                        .clearCookie('token')
+                        .json({message: 'Email or Password invalid'});
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.status(404).clearCookie('token').json({
+                    message: 'User not found. Please register first.',
                 });
-            }
-            return res
-                .status(400)
-                .clearCookie('token')
-                .json({message: 'Email or Password invalid'});
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(404).clearCookie('token').json({
-                message: 'User not found. Please register first.',
             });
-        });
+    } catch (err) {
+        console.log('logging the error', err);
+    }
 };
 
 // register controller

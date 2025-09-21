@@ -28,9 +28,9 @@ const flashCardSchema = db.Schema({
         ref: 'User',
     },
     title: String,
-    flashCard: [cardSchema],
+    flashcard: [cardSchema],
 });
 
-const FlashCard = new db.model('Flashcard', flashCardSchema);
+const Flashcard = new db.model('Flashcard', flashCardSchema);
 
-module.exports = FlashCard;
+module.exports = Flashcard;

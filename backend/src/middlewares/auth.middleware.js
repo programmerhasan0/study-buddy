@@ -23,8 +23,16 @@ const checkAuth = async (req, res, next) => {
             const checkUser = jwt.verify(token, process.env.JWT_SECRET);
             if (checkUser) {
                 const user = await User.findById(checkUser.id);
-                req.user = user;
-                next();
+                if (user) {
+                    req.user = user;
+                    next();
+                } else {
+                    return res
+                        .status(404)
+                        .json(
+                            new ApiResponse(404, 'User not found! Please login')
+                        );
+                }
             }
         } catch (err) {
             if (err instanceof jwt.JsonWebTokenError) {
