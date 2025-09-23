@@ -14,15 +14,6 @@ class ApiResponse {
         this.res = res;
     }
 
-    success(status = 200, message, type = 'response', data = {}) {
-        return this.res.status(status).json({
-            status,
-            message,
-            type,
-            data,
-        });
-    }
-
     setCookie(name, value) {
         this.res.cookie(name, value);
         return this;
@@ -41,6 +32,15 @@ class ApiResponse {
     setToken(token) {
         this.res.cookie('token', token);
         return this;
+    }
+
+    success(status = 200, message, type = 'response', data = {}) {
+        return this.res.status(status).json({
+            status,
+            message,
+            type,
+            data,
+        });
     }
 
     error(

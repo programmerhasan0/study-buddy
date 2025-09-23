@@ -10,10 +10,11 @@
  */
 
 const router = require('express').Router();
-const {login, register} = require('../controllers/auth.controller');
+const {login, register, getUser} = require('../controllers/auth.controller');
 
 router.post('/login', login);
 
 router.post('/register', register);
+router.get('/me', getUser);
 
 module.exports = router;

@@ -119,8 +119,51 @@ const register = async (req, res, next) => {
         });
 };
 
+// get logged in user
+
+const getUser = async (req, res) => {
+    const token = req.cookies?.token;
+
+    if (token) {
+        try {
+            // * verifying the token
+            const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+            if (checkUser) {
+                const user = await User.findById(checkUser.id).select(
+                    '-password -notes -flashcards -quizzes'
+                );
+                if (user) {
+                    return new ApiResponse(res).success(
+                        200,
+                        'User found',
+                        'auth',
+                        user
+                    );
+                } else {
+                    return new ApiResponse(res).error(
+                        404,
+                        'User not found! Please login'
+                    );
+                }
+            }
+        } catch (err) {
+            if (err instanceof jwt.JsonWebTokenError) {
+                return new ApiResponse(res).error(
+                    401,
+                    'Invalid Session! Please relogin'
+                );
+            } else {
+                return new ApiResponse(res).error();
+            }
+        }
+    } else {
+        return new ApiResponse(res).error(400, 'Token is required');
+    }
+};
+
 // TODO : logout controller
 // TODO : forget password controller
 
 module.exports.login = login;
 module.exports.register = register;
+module.exports.getUser = getUser;
