@@ -16,23 +16,35 @@ import HomePage from './pages/Home.page';
 import {ToastContainer} from 'react-toastify';
 import NotFound from './pages/NotFound.page';
 import AuthContextProvider from './context/Auth.context';
+import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 const Router = () => {
     return (
         <div>
-            <AuthContextProvider>
-                <ToastContainer />
-                <BrowserRouter>
+            <BrowserRouter>
+                <AuthContextProvider>
+                    <ToastContainer />
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/auth">
                             <Route path="login" element={<Login />} />
                             <Route path="register" element={<Register />} />
                         </Route>
+                        <Route path="/user">
+                            <Route
+                                path="dashboard"
+                                element={
+                                    <PrivateRoute>
+                                        <Dashboard />
+                                    </PrivateRoute>
+                                }
+                            />
+                        </Route>
                         <Route path="/*" element={<NotFound />} />
                     </Routes>
-                </BrowserRouter>
-            </AuthContextProvider>
+                </AuthContextProvider>
+            </BrowserRouter>
         </div>
     );
 };

@@ -50,7 +50,13 @@ const login = (req, res, next) => {
                         );
                         return new ApiResponse(res)
                             .setToken(token)
-                            .success(200, 'Login successful');
+                            .success(200, 'Login successful', 'auth', {
+                                _id: user._id,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                email: user.email,
+                                phoneNumber: user.phoneNumber,
+                            });
                     }
                     return new ApiResponse(res)
                         .clearToken()
@@ -120,7 +126,6 @@ const register = async (req, res, next) => {
 };
 
 // get logged in user
-
 const getUser = async (req, res) => {
     const token = req.cookies?.token;
 

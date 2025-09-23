@@ -9,18 +9,48 @@
  *
  */
 
+import axios from 'axios';
+import {useEffect} from 'react';
 import {createContext, useContext, useState} from 'react';
+import {useNavigate} from 'react-router';
+import {toast} from 'react-toastify';
 
 const AuthContext = createContext();
 
 const AuthContextProvider = ({children}) => {
-    const [user, setUser] = useState({});
+    const navigate = useNavigate();
+    const [user, setUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userLoading, setUserLoading] = useState(true);
 
     const contextValue = {
-        userState: [user, setUser],
-        isLoggedInState: [isLoggedIn, setIsLoggedIn],
+        user: [user, setUser],
+        isLoggedIn: [isLoggedIn, setIsLoggedIn],
+        userLoading: [userLoading, setUserLoading],
     };
+
+    useEffect(() => {
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/auth/me`, {
+                withCredentials: true,
+            })
+            .then((response) => {
+                if (response.data.data) {
+                    setUser(response.data.data);
+                    setIsLoggedIn(true);
+                }
+            })
+            .catch((error) => {
+                setUserLoading(false);
+                if (error.response.data.status === 401) {
+                    toast.error('Invalid session please login');
+                    navigate('/auth/login');
+                }
+            })
+            .finally(() => {
+                setUserLoading(false);
+            });
+    }, []);
 
     return (
         <AuthContext.Provider value={contextValue}>

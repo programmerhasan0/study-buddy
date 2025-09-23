@@ -18,17 +18,18 @@ import {useAuthContext} from '../../context/Auth.context';
 const Login = () => {
     const navigate = useNavigate();
     const {
-        userState: [user, setUser],
-        isLoggedInState: [isLoggedIn, setIsLoggedIn],
+        user: [user, setUser],
+        isLoggedIn: [isLoggedIn, setIsLoggedIn],
     } = useAuthContext();
-
     const handleFormSubmit = (data) => {
         axios
             .post(`${import.meta.env.VITE_SERVER_URL}/auth/login`, data, {
                 withCredentials: true,
             })
             .then((response) => {
-                
+                setUser(response.data.data);
+                setIsLoggedIn(true);
+
                 navigate('/user/dashboard');
             })
             .catch((error) => {
