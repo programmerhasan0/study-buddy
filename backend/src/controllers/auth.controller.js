@@ -167,8 +167,20 @@ const getUser = async (req, res) => {
 };
 
 // TODO : logout controller
+const postLogOut = (req, res) => {
+    const token = req.cookies?.token;
+    if (token) {
+        return new ApiResponse(res)
+            .clearToken()
+            .success(200, 'Successfully logged out');
+    } else {
+        return new ApiResponse(res).error(400, 'Token is required');
+    }
+};
+
 // TODO : forget password controller
 
 module.exports.login = login;
 module.exports.register = register;
 module.exports.getUser = getUser;
+module.exports.postLogOut = postLogOut;

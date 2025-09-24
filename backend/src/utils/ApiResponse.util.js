@@ -25,7 +25,7 @@ class ApiResponse {
     }
 
     clearToken() {
-        this.res.clearCookie('token');
+        this.res.clearCookie('token', {httpOnly: true, secure: true});
         return this;
     }
 

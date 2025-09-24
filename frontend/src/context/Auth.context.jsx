@@ -41,6 +41,7 @@ const AuthContextProvider = ({children}) => {
                 }
             })
             .catch((error) => {
+                console.log(error);
                 setUserLoading(false);
                 if (error.response.data.status === 401) {
                     toast.error('Invalid session please login');

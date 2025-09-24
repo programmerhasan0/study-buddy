@@ -11,14 +11,19 @@
 
 import {Navigate, Route} from 'react-router';
 import {useAuthContext} from '../context/Auth.context';
-
+import {ClipLoader} from 'react-spinners';
 const PrivateRoute = ({children}) => {
     const {
         isLoggedIn: [isLoggedIn],
         userLoading: [userLoading],
     } = useAuthContext();
     console.log(userLoading);
-    if (userLoading) return <div className="text-4xl">Loading...</div>;
+    if (userLoading)
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <ClipLoader size={50} color="#171717" loading={userLoading} />
+            </div>
+        );
     if (!isLoggedIn) return <Navigate to="/auth/login" replace />;
 
     return children;

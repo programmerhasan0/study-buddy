@@ -18,6 +18,10 @@ import NotFound from './pages/NotFound.page';
 import AuthContextProvider from './context/Auth.context';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import DashboardLayout from './components/dashboard/DashboardLayout';
+import ViewNotes from './pages/notes/ViewNotes';
+import ViewSingleNote from './pages/notes/ViewSingleNote';
+import ViewFlashcards from './pages/flashcards/ViewFlashcards';
 
 const Router = () => {
     return (
@@ -31,15 +35,52 @@ const Router = () => {
                             <Route path="login" element={<Login />} />
                             <Route path="register" element={<Register />} />
                         </Route>
-                        <Route path="/user">
-                            <Route
-                                path="dashboard"
-                                element={
-                                    <PrivateRoute>
-                                        <Dashboard />
-                                    </PrivateRoute>
-                                }
-                            />
+
+                        <Route
+                            element={
+                                <PrivateRoute>
+                                    <DashboardLayout />
+                                </PrivateRoute>
+                            }
+                        >
+                            <Route path="user">
+                                <Route
+                                    path="dashboard"
+                                    element={
+                                        <PrivateRoute>
+                                            <Dashboard />
+                                        </PrivateRoute>
+                                    }
+                                />
+                                <Route path="notes">
+                                    <Route
+                                        path="view"
+                                        element={
+                                            <PrivateRoute>
+                                                <ViewNotes />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="view/:noteId"
+                                        element={
+                                            <PrivateRoute>
+                                                <ViewSingleNote />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                </Route>
+                                <Route path="flashcards">
+                                    <Route
+                                        path="view"
+                                        element={
+                                            <PrivateRoute>
+                                                <ViewFlashcards />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                </Route>
+                            </Route>
                         </Route>
                         <Route path="/*" element={<NotFound />} />
                     </Routes>
