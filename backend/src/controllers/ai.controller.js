@@ -37,6 +37,7 @@ const makeNote = (req, res) => {
             });
 
             const savedNote = await note.save();
+            console.log(savedNote);
 
             await User.findByIdAndUpdate(
                 req.user._id,
@@ -49,7 +50,7 @@ const makeNote = (req, res) => {
                 201,
                 'Text Summerized',
                 'note',
-                data
+                savedNote._id
             );
         });
     } else {
@@ -83,7 +84,7 @@ const makeFlashCards = (req, res) => {
                 201,
                 'Flashcards Generated',
                 'flashcards',
-                data
+                savedCard._id
             );
         });
     } else {
@@ -115,7 +116,7 @@ const makeQuizzes = (req, res) => {
                 201,
                 'Quizzes Generated',
                 'quiz',
-                data
+                savedQuiz._id
             );
         });
     } else {

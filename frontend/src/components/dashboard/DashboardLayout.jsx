@@ -18,9 +18,9 @@ const DashboardLayout = () => {
         <div>
             <SidebarProvider>
                 <AppSidebar />
-                <main>
-                    <SidebarTrigger />
-                    <div className="pl-2.5">
+                <main className="flex-1 p-4">
+                    <SidebarTrigger className="" />
+                    <div className="">
                         <Outlet />
                     </div>
                 </main>

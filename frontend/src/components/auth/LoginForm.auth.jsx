@@ -38,7 +38,9 @@ const LoginForm = ({handleFormSubmit}) => {
                         </CardDescription>
                         <CardAction>
                             <Link to="/auth/register">
-                                <Button variant="link">Register</Button>
+                                <Button variant="link" type="button">
+                                    Register
+                                </Button>
                             </Link>
                         </CardAction>
                     </CardHeader>

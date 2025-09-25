@@ -22,6 +22,12 @@ import DashboardLayout from './components/dashboard/DashboardLayout';
 import ViewNotes from './pages/notes/ViewNotes';
 import ViewSingleNote from './pages/notes/ViewSingleNote';
 import ViewFlashcards from './pages/flashcards/ViewFlashcards';
+import ViewSingleFlashcard from './pages/flashcards/ViewSingleFlashcard';
+import CreateNote from './pages/notes/CreateNote';
+import ViewQuizzes from './pages/quizzes/ViewQuizzes';
+import CreateQuiz from './pages/quizzes/CreateQuiz';
+import ViewSingleQuiz from './pages/quizzes/ViewSingleQuiz';
+import CreateFlashcard from './pages/flashcards/CreateFlashcard';
 
 const Router = () => {
     return (
@@ -62,6 +68,14 @@ const Router = () => {
                                         }
                                     />
                                     <Route
+                                        path="generate"
+                                        element={
+                                            <PrivateRoute>
+                                                <CreateNote />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                    <Route
                                         path="view/:noteId"
                                         element={
                                             <PrivateRoute>
@@ -70,12 +84,54 @@ const Router = () => {
                                         }
                                     />
                                 </Route>
-                                <Route path="flashcards">
+                                <Route path="flashcard">
                                     <Route
                                         path="view"
                                         element={
                                             <PrivateRoute>
                                                 <ViewFlashcards />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="view/:flashcardId"
+                                        element={
+                                            <PrivateRoute>
+                                                <ViewSingleFlashcard />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="generate"
+                                        element={
+                                            <PrivateRoute>
+                                                <CreateFlashcard />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                </Route>
+                                <Route path="quiz">
+                                    <Route
+                                        path="view"
+                                        element={
+                                            <PrivateRoute>
+                                                <ViewQuizzes />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="generate"
+                                        element={
+                                            <PrivateRoute>
+                                                <CreateQuiz />
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="view/:quizId"
+                                        element={
+                                            <PrivateRoute>
+                                                <ViewSingleQuiz />
                                             </PrivateRoute>
                                         }
                                     />

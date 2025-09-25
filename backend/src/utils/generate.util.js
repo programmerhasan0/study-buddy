@@ -27,7 +27,7 @@ const generateNotes = async (text) => {
             }
             --- EXAMPLE END ---
 
-            Use markdown file writing method so that I can show it into my markdown viewer. Provide detailed study notes in a clear, well structured format. Ensure the notes cover all key concepts and important details from the text.
+            Use markdown file writing method so that I can show it into my markdown viewer. Provide detailed study notes in a clear, well structured format. Ensure the notes cover all key concepts and important details from the text. If you are marking with numbers like 1., 2., 3., thank make the hole point bold. But don't make bold unnecessary things bold.
             `,
             responseMimeType: 'application/json',
             responseSchema: {

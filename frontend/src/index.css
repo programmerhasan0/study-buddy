@@ -8,10 +8,14 @@
  * Date : 22/09/2025
  * 
  */
-
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
+
+body {
+    font-family: 'Hind Siliguri', sans-serif;
+}
 
 /*---break--- 
  */

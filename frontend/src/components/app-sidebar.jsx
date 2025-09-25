@@ -63,7 +63,7 @@ export function AppSidebar() {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <Link to="/user/note/generate">
+                                    <Link to="/user/notes/generate">
                                         <GoNote />
                                         <span>Generate note</span>
                                     </Link>

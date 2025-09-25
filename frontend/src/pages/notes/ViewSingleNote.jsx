@@ -34,7 +34,7 @@ const ViewSingleNote = () => {
     return (
         <div>
             <h2 className="text-2xl">{note.title}</h2>
-            <div className="text-justify md:p-7">
+            <div className="text-justify">
                 <ReactMarkdown>{note.note}</ReactMarkdown>
             </div>
         </div>

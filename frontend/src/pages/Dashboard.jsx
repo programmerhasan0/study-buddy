@@ -77,7 +77,7 @@ const Dashboard = () => {
                     </Link>
                 </div>
                 <div className="w-3xs mt-2 mb-3 p-2">
-                    <Link to="/user/flashcards/view">
+                    <Link to="/user/flashcard/view">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Flashcards</CardTitle>
@@ -92,7 +92,7 @@ const Dashboard = () => {
                     <Link to="user/quizzes/view">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Quizzes : </CardTitle>
+                                <CardTitle>Quizzes</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p> {userGeneratedInfo.quizzes.length}</p>
