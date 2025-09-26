@@ -15,6 +15,8 @@ const {
     register,
     getUser,
     postLogOut,
+    postForgetPassword,
+    postUpdatePassword,
 } = require('../controllers/auth.controller');
 
 router.post('/login', login);
@@ -22,5 +24,8 @@ router.post('/logout', postLogOut);
 
 router.post('/register', register);
 router.get('/me', getUser);
+
+router.post('/forget-password', postForgetPassword);
+router.patch('/update-password', postUpdatePassword);
 
 module.exports = router;

@@ -28,6 +28,7 @@ import ViewQuizzes from './pages/quizzes/ViewQuizzes';
 import CreateQuiz from './pages/quizzes/CreateQuiz';
 import ViewSingleQuiz from './pages/quizzes/ViewSingleQuiz';
 import CreateFlashcard from './pages/flashcards/CreateFlashcard';
+import ForgetPassword from './pages/auth/ForgetPassword.auth';
 
 const Router = () => {
     return (
@@ -40,6 +41,10 @@ const Router = () => {
                         <Route path="/auth">
                             <Route path="login" element={<Login />} />
                             <Route path="register" element={<Register />} />
+                            <Route
+                                path="forget-password"
+                                element={<ForgetPassword />}
+                            />
                         </Route>
 
                         <Route

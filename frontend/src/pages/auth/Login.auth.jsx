@@ -40,9 +40,13 @@ const Login = () => {
     };
 
     useEffect(() => {
-        if (location.state?.registered)
+        if (location.state?.registered) {
             toast.success('Succesfully Registered. Please login');
+        } else if (location.state?.reset) {
+            toast.success('Password updated! Please login');
+        }
     }, []);
+
     return <LoginForm handleFormSubmit={handleFormSubmit} />;
 };
 

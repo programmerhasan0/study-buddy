@@ -20,7 +20,6 @@ const getNotesTitle = async (req, res, next) => {
         path: 'notes',
         select: 'title',
     });
-    console.log(notes);
     return new ApiResponse(res).success(
         200,
         'data retrieve successful',
@@ -100,7 +99,6 @@ const getFlashCard = async (req, res, next) => {
 
 const deleteFlashcard = async (req, res, next) => {
     const flashcardId = req.params?.flashcardId;
-    console.log(flashcardId);
     if (flashcardId) {
         await User.findByIdAndUpdate(
             req.user._id,

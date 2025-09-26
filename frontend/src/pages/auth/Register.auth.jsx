@@ -28,7 +28,7 @@ const Register = () => {
             .then((response) => {
                 setRegLoading(false);
                 navigate('/auth/login', {
-                    state: {urlFrom: '/auth/register', registered: true},
+                    state: {from: '/auth/register', registered: true},
                 });
             })
             .catch((error) => {

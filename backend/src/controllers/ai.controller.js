@@ -28,7 +28,7 @@ const makeNote = (req, res) => {
     if (text) {
         generateNotes(text).then(async (data) => {
             // TODO : save data to database with the user id which will be retrieved from the token.
-            console.log(data);
+
 
             const note = new Note({
                 userId: req.user._id,
@@ -37,7 +37,7 @@ const makeNote = (req, res) => {
             });
 
             const savedNote = await note.save();
-            console.log(savedNote);
+
 
             await User.findByIdAndUpdate(
                 req.user._id,
