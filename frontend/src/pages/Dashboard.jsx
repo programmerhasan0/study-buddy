@@ -89,7 +89,7 @@ const Dashboard = () => {
                     </Link>
                 </div>
                 <div className="w-3xs mt-2 mb-3 p-2">
-                    <Link to="user/quizzes/view">
+                    <Link to="/user/quiz/view">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Quizzes</CardTitle>
