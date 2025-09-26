@@ -44,7 +44,7 @@ const getNote = async (req, res, next) => {
 };
 
 const deleteNote = async (req, res, next) => {
-    const noteId = req.body?.noteId;
+    const noteId = req.params?.noteId;
 
     if (noteId) {
         await User.findByIdAndUpdate(
@@ -99,7 +99,8 @@ const getFlashCard = async (req, res, next) => {
 };
 
 const deleteFlashcard = async (req, res, next) => {
-    const flashcardId = req.body?.flashcardId;
+    const flashcardId = req.params?.flashcardId;
+    console.log(flashcardId);
     if (flashcardId) {
         await User.findByIdAndUpdate(
             req.user._id,
@@ -153,7 +154,7 @@ const getQuiz = async (req, res, next) => {
 };
 
 const deleteQuiz = async (req, res, next) => {
-    const quizId = req.body?.quizId;
+    const quizId = req.params?.quizId;
     if (quizId) {
         await User.findByIdAndUpdate(
             req.user._id,
