@@ -12,11 +12,13 @@
 import {toast} from 'react-toastify';
 import LoginForm from '../../components/auth/LoginForm.auth';
 import axios from 'axios';
-import {useNavigate} from 'react-router';
+import {useLocation, useNavigate} from 'react-router';
 import {useAuthContext} from '../../context/Auth.context';
+import {useEffect} from 'react';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const {
         user: [user, setUser],
         isLoggedIn: [isLoggedIn, setIsLoggedIn],
@@ -36,6 +38,11 @@ const Login = () => {
                 toast.error(error.response.data.message);
             });
     };
+
+    useEffect(() => {
+        if (location.state?.registered)
+            toast.success('Succesfully Registered. Please login');
+    }, []);
     return <LoginForm handleFormSubmit={handleFormSubmit} />;
 };
 

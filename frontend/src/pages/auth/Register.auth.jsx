@@ -13,9 +13,11 @@ import {useState} from 'react';
 import RegisterForm from '../../components/auth/RegisterForm.auth';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import {useNavigate} from 'react-router';
 
 const Register = () => {
     const [regLoading, setRegLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleRegisterFormSubmit = (data) => {
         setRegLoading(true);
@@ -25,7 +27,9 @@ const Register = () => {
             })
             .then((response) => {
                 setRegLoading(false);
-                console.log('Registered : ', response.data);
+                navigate('/auth/login', {
+                    state: {urlFrom: '/auth/register', registered: true},
+                });
             })
             .catch((error) => {
                 setRegLoading(false);
