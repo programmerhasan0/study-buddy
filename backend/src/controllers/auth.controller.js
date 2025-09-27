@@ -201,6 +201,7 @@ const postForgetPassword = async (req, res) => {
                     return new ApiResponse(res).success(200, 'Email sent');
                 })
                 .catch((error) => {
+                    console.log(error);
                     return new ApiResponse(res).error();
                 });
         } else {
