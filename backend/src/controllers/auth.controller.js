@@ -183,8 +183,10 @@ const postLogOut = (req, res) => {
 const postForgetPassword = async (req, res) => {
     console.log('Hit on forget password');
     const email = req.body?.email;
+    console.log('email from user is : ', email);
     if (email) {
         const user = await User.findOne({email});
+        console.log('user is :', user);
         if (user?._id) {
             //sending email to the client
             const token = jwt.sign(
@@ -192,6 +194,7 @@ const postForgetPassword = async (req, res) => {
                 process.env.JWT_SECRET,
                 {expiresIn: '5m'}
             );
+            console.log(token);
             sendForgetPasswordMail(user.firstName, user.email, token)
                 .then((response) => {
                     console.log('forget password email res : ', response);
