@@ -195,6 +195,7 @@ const postForgetPassword = async (req, res) => {
                 {expiresIn: '5m'}
             );
             console.log(token);
+            console.log(process.env.GMAIL_SMTP_PW);
             sendForgetPasswordMail(user.firstName, user.email, token)
                 .then((response) => {
                     console.log('forget password email res : ', response);
