@@ -29,7 +29,6 @@ class ApiResponse {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-            domain: 'study-buddy-ph0.web.app',
             maxAge: 1000 * 60 * 60 * 24,
         });
         return this;
