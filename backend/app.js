@@ -16,7 +16,11 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-const allowOrigins = ['http://localhost:5173', 'http://192.168.0.159:5173'];
+const allowOrigins = [
+    'http://localhost:5173',
+    'https://study-buddy-ph0.web.app',
+    'https://study-buddy-ph0.firebaseapp.com/',
+];
 app.use(
     cors({
         origin: (origin, callback) => {
