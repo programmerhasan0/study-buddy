@@ -26,14 +26,21 @@ class ApiResponse {
 
     setToken(token) {
         this.res.cookie('token', token, {
-            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
             secure: true,
             sameSite: 'none',
+            maxAge: 1000 * 60 * 60 * 24,
+            path: '/',
         });
         return this;
     }
     clearToken() {
-        this.res.clearCookie('token');
+        this.res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            path: '/',
+        });
         return this;
     }
 
