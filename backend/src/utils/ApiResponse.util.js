@@ -27,6 +27,8 @@ class ApiResponse {
     setToken(token) {
         this.res.cookie('token', token, {
             maxAge: 1000 * 60 * 60 * 24,
+            secure: true,
+            sameSite: 'none',
         });
         return this;
     }
