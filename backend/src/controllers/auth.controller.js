@@ -48,14 +48,27 @@ const login = (req, res, next) => {
                                 expiresIn: '1d',
                             }
                         );
-                        return new ApiResponse(res)
-                            .setToken(token)
-                            .success(200, 'Login successful', 'auth', {
-                                _id: user._id,
-                                firstName: user.firstName,
-                                lastName: user.lastName,
-                                email: user.email,
-                                phoneNumber: user.phoneNumber,
+
+                        return res
+                            .status(200)
+                            .cookie('token', token, {
+                                httpOnly: true,
+                                sameSite: 'none',
+                                secure: true,
+                                maxAge: 1000 * 60 * 60 * 24,
+                                path: '/',
+                            })
+                            .json({
+                                status: 200,
+                                message: 'Logged in',
+                                type: 'response',
+                                data: {
+                                    _id: user._id,
+                                    firstName: user.firstName,
+                                    lastName: user.lastName,
+                                    email: user.email,
+                                    phoneNumber: user.phoneNumber,
+                                },
                             });
                     } else {
                         return new ApiResponse(res)

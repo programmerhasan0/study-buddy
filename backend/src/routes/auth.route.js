@@ -27,5 +27,8 @@ router.get('/me', getUser);
 
 router.post('/forget-password', postForgetPassword);
 router.patch('/update-password', postUpdatePassword);
+router.get('/fs', (req, res) => {
+
+});
 
 module.exports = router;
