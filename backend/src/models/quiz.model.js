@@ -9,7 +9,7 @@
  *
  */
 
-const db = require('../services/db.service');
+const db = require('../services/db.service.js');
 
 const quizSchema = db.Schema({
     question: String,

@@ -10,9 +10,9 @@
  */
 
 const jwt = require('jsonwebtoken');
-const {ApiResponse} = require('../utils/ApiResponse.util');
+const {ApiResponse} = require('../utils/ApiResponse.util.js');
 
-const User = require('../models/user.model');
+const User = require('../models/user.model.js');
 
 const checkAuth = async (req, res, next) => {
     const token = req.cookies?.token;

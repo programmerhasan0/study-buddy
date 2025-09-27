@@ -9,7 +9,7 @@
  *
  */
 
-const db = require('../services/db.service');
+const db = require('../services/db.service.js');
 
 const noteSchema = db.Schema({
     userId: {type: db.Schema.Types.ObjectId, ref: 'User'},

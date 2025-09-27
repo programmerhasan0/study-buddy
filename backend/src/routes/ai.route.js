@@ -16,7 +16,7 @@ const {
     makeNote,
     makeFlashCards,
     makeQuizzes,
-} = require('../controllers/ai.controller');
+} = require('../controllers/ai.controller.js');
 
 router.post('/make-note', makeNote);
 router.post('/make-flashcards', makeFlashCards);

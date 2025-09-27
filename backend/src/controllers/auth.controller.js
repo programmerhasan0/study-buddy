@@ -10,11 +10,11 @@
  */
 
 const bcrypt = require('bcrypt');
-const User = require('../models/user.model');
+const User = require('../models/user.model.js');
 const jwt = require('jsonwebtoken');
 
-const {ApiResponse} = require('../utils/ApiResponse.util');
-const {sendForgetPasswordMail} = require('../utils/sendMail.util');
+const {ApiResponse} = require('../utils/ApiResponse.util.js');
+const {sendForgetPasswordMail} = require('../utils/sendMail.util.js');
 
 // login controller
 const login = (req, res, next) => {

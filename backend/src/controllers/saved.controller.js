@@ -9,11 +9,11 @@
  *
  */
 
-const Flashcard = require('../models/flashcard.model');
-const Quiz = require('../models/quiz.model');
-const User = require('../models/user.model');
-const Note = require('../models/note.model');
-const {ApiResponse} = require('../utils/ApiResponse.util');
+const Flashcard = require('../models/flashcard.model.js');
+const Quiz = require('../models/quiz.model.js');
+const User = require('../models/user.model.js');
+const Note = require('../models/note.model.js');
+const {ApiResponse} = require('../utils/ApiResponse.util.js');
 
 const getNotesTitle = async (req, res, next) => {
     const notes = await User.findById(req.user._id).populate({

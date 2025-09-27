@@ -9,7 +9,7 @@
  *
  */
 
-const db = require('../services/db.service');
+const db = require('../services/db.service.js');
 
 const userSchema = db.Schema({
     firstName: {type: String, required: true},

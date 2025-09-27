@@ -13,14 +13,14 @@ const {
     generateNotes,
     generateFlashCards,
     generateQuizzes,
-} = require('../utils/generate.util');
+} = require('../utils/generate.util.js');
 
-const {ApiResponse} = require('../utils/ApiResponse.util');
-const FlashCard = require('../models/flashcard.model');
+const {ApiResponse} = require('../utils/ApiResponse.util.js');
+const FlashCard = require('../models/flashcard.model.js');
 
-const Note = require('../models/note.model');
-const Quiz = require('../models/quiz.model');
-const User = require('../models/user.model');
+const Note = require('../models/note.model.js');
+const Quiz = require('../models/quiz.model.js');
+const User = require('../models/user.model.js');
 
 const makeNote = (req, res) => {
     const {text} = req.body;
@@ -29,7 +29,6 @@ const makeNote = (req, res) => {
         generateNotes(text).then(async (data) => {
             // TODO : save data to database with the user id which will be retrieved from the token.
 
-
             const note = new Note({
                 userId: req.user._id,
                 title: data.title,
@@ -37,7 +36,6 @@ const makeNote = (req, res) => {
             });
 
             const savedNote = await note.save();
-
 
             await User.findByIdAndUpdate(
                 req.user._id,
