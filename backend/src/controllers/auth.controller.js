@@ -181,6 +181,7 @@ const postLogOut = (req, res) => {
 
 // TODO : forget password controller
 const postForgetPassword = async (req, res) => {
+    console.log('Hit on forget password');
     const email = req.body?.email;
     if (email) {
         const user = await User.findOne({email});
@@ -192,7 +193,8 @@ const postForgetPassword = async (req, res) => {
                 {expiresIn: '5m'}
             );
             sendForgetPasswordMail(user.firstName, user.email, token)
-                .then(() => {
+                .then((response) => {
+                    console.log('forget password email res : ', response);
                     return new ApiResponse(res).success(200, 'Email sent');
                 })
                 .catch((error) => {
