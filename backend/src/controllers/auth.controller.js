@@ -14,7 +14,10 @@ const User = require('../models/user.model.js');
 const jwt = require('jsonwebtoken');
 
 const {ApiResponse} = require('../utils/ApiResponse.util.js');
-const {sendForgetPasswordMail} = require('../utils/sendMail.util.js');
+const {
+    sendForgetPasswordMail,
+    transporter,
+} = require('../utils/sendMail.util.js');
 
 // login controller
 const login = (req, res, next) => {
@@ -181,12 +184,11 @@ const postLogOut = (req, res) => {
 
 // TODO : forget password controller
 const postForgetPassword = async (req, res) => {
-    console.log('Hit on forget password');
     const email = req.body?.email;
-    console.log('email from user is : ', email);
+
     if (email) {
         const user = await User.findOne({email});
-        console.log('user is :', user);
+
         if (user?._id) {
             //sending email to the client
             const token = jwt.sign(
@@ -194,8 +196,7 @@ const postForgetPassword = async (req, res) => {
                 process.env.JWT_SECRET,
                 {expiresIn: '5m'}
             );
-            console.log(token);
-            console.log(process.env.GMAIL_SMTP_PW);
+
             sendForgetPasswordMail(user.firstName, user.email, token)
                 .then((response) => {
                     console.log('forget password email res : ', response);

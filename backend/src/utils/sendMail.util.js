@@ -9,24 +9,19 @@
  *
  */
 
-const nodemailer = require('nodemailer');
+const Brevo = require('@getbrevo/brevo');
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: 'programmerhasanprojects@gmail.com',
-        pass: process.env.GMAIL_SMTP_PW,
-    },
-});
-
+// Brevo
+const apiInstance = new Brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(
+    Brevo.TransactionalEmailsApiApiKeys.apiKey,
+    process.env.BREVO_API_KEY
+);
 const sendForgetPasswordMail = (firstName, email, token) => {
-    return transporter.sendMail({
-        from: 'programmerhasanprojects@gmail.com',
-        to: email,
-        subject: 'Password Reset - study-buddy',
-        html: `
+    const sendSmtpEmail = new Brevo.SendSmtpEmail();
+
+    sendSmtpEmail.subject = 'Password reset - StudyBuddy';
+    sendSmtpEmail.htmlContent = `
         <h3>Hello ${firstName}</h3>
         <p>Please <a href='${process.env.CLIENT_URL}/auth/forget-password?token=${token}'>Click here</a> to reset your account password</p>
         <p>This link is valid only of 5 minutes.</p>
@@ -35,9 +30,14 @@ const sendForgetPasswordMail = (firstName, email, token) => {
         <br />
         <p>Thank You</p>
         <p>Md Habibul Hasan</p>
-        <p>programmerhasan0@gmail.com</p>
-        `,
-    });
+        <p>programmerhasan0@gmail.com</p>`;
+
+    sendSmtpEmail.sender = {
+        name: 'Study Buddy',
+        email: 'programmerhasan0@gmail.com',
+    };
+    sendSmtpEmail.to = [{email: email}];
+    return apiInstance.sendTransacEmail(sendSmtpEmail);
 };
 
 module.exports.sendForgetPasswordMail = sendForgetPasswordMail;

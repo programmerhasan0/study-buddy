@@ -9,6 +9,7 @@
   "author": "programmerhasan0@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "@getbrevo/brevo": "^3.0.1",
     "@google/genai": "^1.20.0",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
@@ -18,7 +19,6 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.19.0",
-    "mongoose": "^8.18.1",
-    "nodemailer": "^7.0.6"
+    "mongoose": "^8.18.1"
   }
 }
