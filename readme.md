@@ -27,7 +27,7 @@ Pass: Admin123
 
 -   🤖 **AI-Powered Learning** – Generate notes, flashcards, and quizzes with **Google Gemini**.
 -   🔐 **Secure Authentication** – Implemented with **JWT** for user authentication & authorization.
--   📧 **Password Recovery** – Forgot password functionality powered by **Gmail SMTP**.
+-   📧 **Password Recovery** – Forgot password functionality powered by **Brevo/Gmail SMTP**.
 -   📂 **Organized Study Material** – Save, manage, and revisit notes, flashcards, and quizzes.
 
 ---
@@ -48,7 +48,7 @@ Pass: Admin123
 -   Google Gemini API (Google AI Studio, GCP)
 -   MongoDB, Mongoose
 -   JWT Authentication
--   Gmail SMTP
+-   Brevo HTTP Mailing System / Gmail SMTP
 
 ---
 
@@ -169,14 +169,33 @@ StudyBuddy
 
 ---
 
+## 🏕️ Environment Variables
+
+This project needs some environment variables to run properly.
+
+For the backend, environment variables are :
+
+```
+MONGO_URI = <Your Mongodb database URI>
+JWT_SECRET = <Your JWT secret>
+GEMINI_API_KEY = <Your Gemeni API Key>
+CLIENT_URL = <Your frontend URL>
+GMAIL_SMTP_KEY = <Your gmail SMTP key>
+BREVO_API_KEY = <Your brevo API key>
+```
+
+For the frontend, environment variables are :
+
+```
+VITE_SERVER_URL= <root url of your api server>/api
+
+```
+
+---
+
 ## 👨‍💻 Credits
 
 -   **Developer:** Muhammad Habibul Hasan
 -   **Email:** programmerhasan0@gmail.com
 
 ---
-
-## 📜 License
-
-This project is licensed under the **MIT License**.  
-Feel free to use, modify, and contribute! 🚀

@@ -9,9 +9,9 @@
  *
  */
 
+// Email send method --> Brevo HTTP
 const Brevo = require('@getbrevo/brevo');
 
-// Brevo
 const apiInstance = new Brevo.TransactionalEmailsApi();
 apiInstance.setApiKey(
     Brevo.TransactionalEmailsApiApiKeys.apiKey,
@@ -39,5 +39,39 @@ const sendForgetPasswordMail = (firstName, email, token) => {
     sendSmtpEmail.to = [{email: email}];
     return apiInstance.sendTransacEmail(sendSmtpEmail);
 };
+
+// Email sending method --> Gmail SMTP
+/*
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  host: <your smtp host>,
+  port: 587 or 465,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: "your email address",
+    pass: "password generated google account center",
+  },
+});
+
+const sendForgetPasswordMail = (firstName, email, token) => {
+    return transporter.sendMail({
+        from: 'programmerhasanprojects@gmail.com',
+        to: email,
+        subject: 'Password Reset - study-buddy',
+        html: `
+        <h3>Hello ${firstName}</h3>
+        <p>Please <a href='${process.env.CLIENT_URL}/auth/forget-password?token=${token}'>Click here</a> to reset your account password</p>
+        <p>This link is valid only of 5 minutes.</p>
+        <br />
+        <br />
+        <br />
+        <p>Thank You</p>
+        <p>Md Habibul Hasan</p>
+        <p>programmerhasan0@gmail.com</p>
+        `,
+    });
+};
+*/
 
 module.exports.sendForgetPasswordMail = sendForgetPasswordMail;

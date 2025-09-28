@@ -199,11 +199,9 @@ const postForgetPassword = async (req, res) => {
 
             sendForgetPasswordMail(user.firstName, user.email, token)
                 .then((response) => {
-                    console.log('forget password email res : ', response);
                     return new ApiResponse(res).success(200, 'Email sent');
                 })
                 .catch((error) => {
-                    console.log(error);
                     return new ApiResponse(res).error();
                 });
         } else {
