@@ -167,11 +167,15 @@ const RegisterForm = ({handleRegisterFormSubmit, regLoading}) => {
                             <Button type="submit" className="w-full">
                                 Register
                             </Button>
-                            <Link className="w-full" to="/">
-                                <Button variant="outline" className="w-full">
+                            <Button
+                                variant="outline"
+                                className="w-full"
+                                disabled={regLoading}
+                            >
+                                <Link className="w-full" to="/">
                                     Go back
-                                </Button>
-                            </Link>
+                                </Link>
+                            </Button>
                         </CardFooter>
                     </Card>
                 </fieldset>

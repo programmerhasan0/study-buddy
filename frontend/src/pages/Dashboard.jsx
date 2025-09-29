@@ -12,14 +12,9 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {useAuthContext} from '../context/Auth.context';
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {Link} from 'react-router';
+import {ClipLoader} from 'react-spinners';
 
 const Dashboard = () => {
     const {
@@ -30,8 +25,10 @@ const Dashboard = () => {
         flashcards: [],
         quizzes: [],
     });
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         axios
             .all([
                 axios.get(
@@ -55,6 +52,9 @@ const Dashboard = () => {
                     flashcards: flashcards.data.data,
                     quizzes: quizzes.data.data,
                 });
+            })
+            .finally(() => {
+                setLoading(false);
             });
     }, []);
 
@@ -71,7 +71,8 @@ const Dashboard = () => {
                                 <CardTitle>Notes</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p> {userGeneratedInfo.notes.length}</p>
+                                <ClipLoader loading={loading} />
+                                <p>{userGeneratedInfo.notes.length}</p>
                             </CardContent>
                         </Card>
                     </Link>
@@ -83,6 +84,7 @@ const Dashboard = () => {
                                 <CardTitle>Flashcards</CardTitle>
                             </CardHeader>
                             <CardContent>
+                                <ClipLoader loading={loading} />
                                 <p> {userGeneratedInfo.flashcards.length}</p>
                             </CardContent>
                         </Card>
@@ -95,6 +97,7 @@ const Dashboard = () => {
                                 <CardTitle>Quizzes</CardTitle>
                             </CardHeader>
                             <CardContent>
+                                <ClipLoader loading={loading} />
                                 <p> {userGeneratedInfo.quizzes.length}</p>
                             </CardContent>
                         </Card>
